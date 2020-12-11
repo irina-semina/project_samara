@@ -46,11 +46,11 @@ data <- read.csv("CIAN_data_for_lin.csv", sep=";", dec=".", header=TRUE)
 
 ggplot(data1, aes(x=Full_square, y=Price)) + 
   geom_point(alpha=0.6) +
-  geom_smooth() +  xlab("Площадь в квадратных метрах")+  ylab("Цена аренды в рублях") 
+  geom_smooth() +  xlab("Площадь в квадратных метрах")+  ylab("Цена в рублях") 
 
 ggplot(data1, aes(x=log(Full_square), y=log(Price)) + 
   geom_point(alpha=0.6) +
-  geom_smooth() +  xlab("Площадь в квадратных метрах")+  ylab("Цена аренды в рублях") 
+  geom_smooth() +  xlab("Площадь в квадратных метрах")+  ylab("Цена в рублях") 
 
 
 names(data)
@@ -142,7 +142,7 @@ stargazer(modlin,modlin3_2,modlin3_1,
 
 stargazer(modlin,modlin3_1,
           se=list(cse(modlin),cse(modlin3_1)),
-          title="Оценка моделей", type="latex", font.size='tiny',
+          title="Оценка моделей", type="text", font.size='tiny',
           column.labels= NULL,
           df=FALSE, digits=1)
 
@@ -183,6 +183,17 @@ modlin_4 <- lm(data = data, price_m2~ Year+	Musor_dummy+	lift_dummy+
                  warm_kotel+	warm_pech+	warm_central+	tr_walk+	tr_tr+	room2+
                  room3+	room4+	room5+	room_mn+	park_naz+	
                  park_podzem+	big_kitch)
+
+
 waldtest(modlin3_1, modlin, vcov = vcovHC)
+
+
+vif(modlin3_1)
+
+ggplot(data, aes(x = Price)) + geom_density(alpha = .4) +
+  xlab("Цена за квадратный метр, рублей")+  ylab("") 
+
+ggplot(data, aes(x = price_m2)) + geom_density(alpha = .4) +
+  xlab("Цена за квадратный метр, рублей")+  ylab("") 
 
 
